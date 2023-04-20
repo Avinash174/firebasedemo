@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1011133244127",
+    "project_id": "fir-demo-34c8e",
+    "storage_bucket": "fir-demo-34c8e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1011133244127:android:9674d856ea0805a332bf6a",
+        "android_client_info": {
+          "package_name": "com.avinashmagar.firebasedemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1011133244127-2uv5ktd33sab7eid206dl1jqqrphe2lp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGsNYQD6L4td33MYUCY-FK89mLMwFRfV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1011133244127-2uv5ktd33sab7eid206dl1jqqrphe2lp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

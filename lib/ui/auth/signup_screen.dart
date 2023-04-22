@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebasedemo/ui/auth/login_Screen.dart';
 import 'package:firebasedemo/widgets/round_button.dart';
 import 'package:flutter/material.dart';
 
@@ -13,11 +15,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         title: const Text('Sign Up'),
       ),
       body: Padding(
@@ -71,7 +74,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
             RoundButton(
               title: 'Sign Up',
               onTap: () {
-                if (_formKey.currentState!.validate()) {}
+                if (_formKey.currentState!.validate()) {
+                  _auth.createUserWithEmailAndPassword(
+                    email: emailController.text.toString(),
+                    password: passwordController.text.toString(),
+                  );
+                }
               },
             ),
             const SizedBox(
@@ -80,10 +88,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Have You Account"),
+                const Text("Have You Account?"),
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => LogInScreen()));
                   },
                   child: const Text(
                     'Log In',

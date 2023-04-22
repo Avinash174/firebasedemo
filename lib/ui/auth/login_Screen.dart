@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebasedemo/ui/auth/signup_screen.dart';
+import 'package:firebasedemo/ui/posts/post_screen.dart';
+import 'package:firebasedemo/utils/utils.dart';
 import 'package:firebasedemo/widgets/round_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,14 +14,41 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LogInScreenState extends State<LogInScreen> {
+  bool loading= false;
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final _auth = FirebaseAuth.instance;
 
   void dispose() {
     super.dispose();
     emailController.dispose();
     passwordController.dispose();
+  }
+
+  void logIn() {
+    setState(() {
+      loading=true;
+    });
+    _auth
+        .signInWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text.toString(),
+        )
+        .then((value) {
+          Utils().toastMsg(value.user!.email.toString());
+          Navigator.push(context, MaterialPageRoute(builder: (_)=>const PostScreen()));
+          setState(() {
+            loading=false;
+          });
+    })
+        .onError((error, stackTrace) {
+          debugPrint(error.toString());
+      Utils().toastMsg(error.toString());
+          setState(() {
+            loading=false;
+          });
+    });
   }
 
   @override
@@ -82,9 +112,12 @@ class _LogInScreenState extends State<LogInScreen> {
                 height: 50,
               ),
               RoundButton(
+                loading: loading,
                 title: 'Log In',
                 onTap: () {
-                  if (_formKey.currentState!.validate()) {}
+                  if (_formKey.currentState!.validate()) {
+                    logIn();
+                  }
                 },
               ),
               const SizedBox(
@@ -96,8 +129,10 @@ class _LogInScreenState extends State<LogInScreen> {
                   const Text("Don't Have Account?"),
                   TextButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => const SignUpScreen()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const SignUpScreen()));
                     },
                     child: const Text(
                       'Sign Up',

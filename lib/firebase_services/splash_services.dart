@@ -7,6 +7,6 @@ class SplashServices {
     Timer(
         const Duration(seconds: 3),
         () => Navigator.push(
-            context, MaterialPageRoute(builder: (_) => LogInScreen())));
+            context, MaterialPageRoute(builder: (_) =>const LogInScreen())));
   }
 }

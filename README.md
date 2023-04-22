@@ -1,6 +1,6 @@
-# firebasedemo
+# FirebaseDemo
 
-A new Flutter project.
+A New Flutter Firebase Project.
 
 ## Getting Started
 

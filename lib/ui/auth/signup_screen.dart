@@ -12,11 +12,33 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  bool loading = false;
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   FirebaseAuth _auth = FirebaseAuth.instance;
+
+  void signup(){
+    setState(() {
+      loading = true;
+    });
+
+    _auth
+        .createUserWithEmailAndPassword(
+        email: emailController.text.toString(),
+        password: passwordController.text.toString())
+        .then((value) {
+      setState(() {
+        loading = false;
+      });
+    }).onError((error, stackTrace) {
+      Utils().toastMsg(error.toString());
+      setState(() {
+        loading=false;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,16 +96,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             RoundButton(
               title: 'Sign Up',
+              loading: loading,
               onTap: () {
                 if (_formKey.currentState!.validate()) {
-                  _auth
-                      .createUserWithEmailAndPassword(
-                          email: emailController.text.toString(),
-                          password: passwordController.text.toString())
-                      .then((value) {})
-                      .onError((error, stackTrace) {
-                    Utils().toastMsg(error.toString());
-                  });
+                  signup();
                 }
               },
             ),

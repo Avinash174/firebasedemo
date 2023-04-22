@@ -4,8 +4,9 @@ class RoundButton extends StatelessWidget {
 
   final String title;
   final VoidCallback onTap;
+  final bool loading;
 
-  const RoundButton({super.key, required this.title, required this.onTap});
+  const RoundButton({super.key, required this.title, required this.onTap,this.loading=false});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class RoundButton extends StatelessWidget {
           color: Colors.deepPurple,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Center(
+        child: loading ? CircularProgressIndicator(strokeWidth: 1,color: Colors.white,):Center(
           child: Text(title,style: TextStyle(color: Colors.white),),
         ),
       ),

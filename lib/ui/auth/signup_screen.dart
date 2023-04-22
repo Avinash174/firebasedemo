@@ -1,31 +1,24 @@
-import 'package:firebasedemo/ui/auth/signup_screen.dart';
 import 'package:firebasedemo/widgets/round_button.dart';
 import 'package:flutter/material.dart';
 
-class LogInScreen extends StatefulWidget {
-  const LogInScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<LogInScreen> createState() => _LogInScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LogInScreenState extends State<LogInScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
-  void dispose() {
-    super.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Log In'),
+        title: const Text('Sign Up'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -76,7 +69,7 @@ class _LogInScreenState extends State<LogInScreen> {
               height: 50,
             ),
             RoundButton(
-              title: 'Log In',
+              title: 'Sign Up',
               onTap: () {
                 if (_formKey.currentState!.validate()) {}
               },
@@ -87,14 +80,13 @@ class _LogInScreenState extends State<LogInScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Don't Have Account"),
+                const Text("Have You Account"),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => SignUpScreen()));
+                    Navigator.pop(context);
                   },
                   child: const Text(
-                    'Sign Up',
+                    'Log In',
                   ),
                 ),
               ],

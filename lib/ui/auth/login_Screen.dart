@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebasedemo/ui/auth/loginwith_phone.dart';
 import 'package:firebasedemo/ui/auth/signup_screen.dart';
 import 'package:firebasedemo/ui/posts/post_screen.dart';
 import 'package:firebasedemo/utils/utils.dart';
@@ -139,6 +140,26 @@ class _LogInScreenState extends State<LogInScreen> {
                     ),
                   ),
                 ],
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>LogInWithPhoneNumber()));
+                },
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    border: Border.all(
+                      color: Colors.black
+                    ),
+                  ),
+                  child: Center(
+                    child: Text('Login With Phone'),
+                  ),
+                ),
               ),
             ],
           ),

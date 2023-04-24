@@ -91,6 +91,7 @@ class _PostScreenState extends State<PostScreen> {
                     return ListTile(
                       title: Text(snapshot.child('id').value.toString()),
                       subtitle: Text(snapshot.child('title').value.toString()),
+                      trailing: Icon(Icons.add),
                     );
                   }else{
                     return Container();

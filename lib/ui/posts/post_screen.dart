@@ -14,13 +14,14 @@ class PostScreen extends StatefulWidget {
 class _PostScreenState extends State<PostScreen> {
   final auth = FirebaseAuth.instance;
   final ref = FirebaseDatabase.instance.ref('Post');
-  final searchController=TextEditingController();
+  final searchController = TextEditingController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,13 +66,11 @@ class _PostScreenState extends State<PostScreen> {
               controller: searchController,
               decoration: InputDecoration(
                 hintText: 'Search',
-               suffixIcon: Icon(Icons.search),
+                suffixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
               ),
-              onChanged: (String value){
-                setState(() {
-
-                });
+              onChanged: (String value) {
+                setState(() {});
               },
             ),
           ),
@@ -81,23 +80,43 @@ class _PostScreenState extends State<PostScreen> {
                 query: ref,
                 defaultChild: Text('Loading'),
                 itemBuilder: (context, snapshot, animation, index) {
-                  final title=Text(snapshot.child('id').value.toString());
-                  if(searchController.text.isEmpty){
+                  final title = Text(snapshot.child('id').value.toString());
+                  if (searchController.text.isEmpty) {
+                    return ListTile(
+                      title: Text(snapshot.child('id').value.toString(),),
+                      subtitle: Text(snapshot.child('title').value.toString(),),
+                      trailing: PopupMenuButton(
+                        icon: Icon(Icons.more_vert),
+                        itemBuilder: (BuildContext context) => [
+                          PopupMenuItem(
+                            value: 1,
+                            child: ListTile(
+                              leading: Icon(Icons.edit),
+                              title: Text('Edit'),
+                            ),
+                          ),
+                          PopupMenuItem(
+                            value: 1,
+                            child: ListTile(
+                              leading: Icon(Icons.delete),
+                              title: Text('Delete'),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                    );
+                  } else if (title
+                      .toString()
+                      .toLowerCase()
+                      .contains(searchController.toString().toLowerCase())) {
                     return ListTile(
                       title: Text(snapshot.child('id').value.toString()),
                       subtitle: Text(snapshot.child('title').value.toString()),
                     );
-                  }else if(title.toString().toLowerCase().contains(searchController.toString().toLowerCase())){
-                    return ListTile(
-                      title: Text(snapshot.child('id').value.toString()),
-                      subtitle: Text(snapshot.child('title').value.toString()),
-                      trailing: Icon(Icons.add),
-                    );
-                  }else{
+                  } else {
                     return Container();
-
                   }
-
                 }),
           ),
         ],

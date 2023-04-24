@@ -46,9 +46,10 @@ class _AddPostState extends State<AddPost> {
                   setState(() {
                     loading=true;
                   });
-                  databaseRef.child(DateTime.now().millisecondsSinceEpoch.toString()).set({
+                  String id=DateTime.now().millisecondsSinceEpoch.toString();
+                  databaseRef.child(id).set({
                     'title':postController.text.toString(),
-                    'id':DateTime.now().millisecondsSinceEpoch.toString()
+                    'id':id
                   }).then((value) {
                     Utils().toastMsg('Post Added');
                   }).onError((error, stackTrace) {
@@ -62,5 +63,9 @@ class _AddPostState extends State<AddPost> {
         ),
       ),
     );
+  }
+
+  Future<void> showDialog()async{
+    return showDialog(context: context, builder: builder)
   }
 }

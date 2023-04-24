@@ -111,10 +111,8 @@ class _PostScreenState extends State<PostScreen> {
                           PopupMenuItem(
                             value: 1,
                             child: ListTile(
-                              onTap: () {
-                                Navigator.pop(context);
-                                showMyDilog(title.toString(),
-                                    snapshot.child('id').value.toString());
+                              onTap: (){
+                                ref.child(snapshot.child('id').value.toString()).remove();
                               },
                               leading: Icon(Icons.delete),
                               title: Text('Delete'),
@@ -173,7 +171,8 @@ class _PostScreenState extends State<PostScreen> {
                     Navigator.pop(context);
                     ref
                         .child(id)
-                        .update({'title': editController.text.toString()}).then(
+                        .update({
+                      'title': editController.text.toString()}).then(
                             (value) {
                       Utils().toastMsg('Post Updated');
                     }).onError((error, stackTrace) {

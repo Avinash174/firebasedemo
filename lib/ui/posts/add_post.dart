@@ -65,7 +65,5 @@ class _AddPostState extends State<AddPost> {
     );
   }
 
-  Future<void> showDialog()async{
-    return showDialog(context: context, builder: builder)
-  }
+
 }

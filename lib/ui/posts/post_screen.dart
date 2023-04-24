@@ -89,6 +89,10 @@ class _PostScreenState extends State<PostScreen> {
                         icon: Icon(Icons.more_vert),
                         itemBuilder: (BuildContext context) => [
                           PopupMenuItem(
+                            onTap: (){
+                              Navigator.pop(context);
+                              showMyDilog();
+                            },
                             value: 1,
                             child: ListTile(
                               leading: Icon(Icons.edit),
@@ -128,5 +132,20 @@ class _PostScreenState extends State<PostScreen> {
         child: Icon(Icons.add),
       ),
     );
+  }
+  Future<void>showMyDilog(){
+    return showDialog(context: context, builder: (BuildContext context){
+      return AlertDialog(
+        title: Text('Update'),
+        content: Container(
+          child: TextField(
+
+          ),
+        ),
+        actions: [],
+
+      );
+
+    });
   }
 }

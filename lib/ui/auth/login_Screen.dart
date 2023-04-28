@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebasedemo/ui/auth/loginwith_phone.dart';
 import 'package:firebasedemo/ui/auth/signup_screen.dart';
+import 'package:firebasedemo/ui/forget_password.dart';
 import 'package:firebasedemo/ui/posts/post_screen.dart';
 import 'package:firebasedemo/utils/utils.dart';
 import 'package:firebasedemo/widgets/round_button.dart';
@@ -64,104 +65,123 @@ class _LogInScreenState extends State<LogInScreen> {
           automaticallyImplyLeading: false,
           title: const Text('Log In'),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Form(
-                key: _formKey,
-                child: Column(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 50,
+                      ),
+                      TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        controller: emailController,
+                        decoration: const InputDecoration(
+                          hintText: 'Email',
+                          prefixIcon: Icon(Icons.alternate_email),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Enter Email';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        keyboardType: TextInputType.text,
+                        controller: passwordController,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Password',
+                          prefixIcon: Icon(Icons.lock_open),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Enter Password';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                RoundButton(
+                  loading: loading,
+                  title: 'Log In',
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      logIn();
+                    }
+                  },
+                ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const ForgetPasswordScreen()));
+                        },
+                        child: const Text(
+                          'Forget Password',
+                        ),
+                      ),
+                    ),
+                SizedBox(
+                  height: 26,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: emailController,
-                      decoration: const InputDecoration(
-                        hintText: 'Email',
-                        prefixIcon: Icon(Icons.alternate_email),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Enter Email';
-                        }
-                        return null;
+                    const Text("Forget Password"),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const SignUpScreen()));
                       },
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      keyboardType: TextInputType.text,
-                      controller: passwordController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        hintText: 'Password',
-                        prefixIcon: Icon(Icons.lock_open),
+                      child: const Text(
+                        'Sign Up',
                       ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Enter Password';
-                        }
-                        return null;
-                      },
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              RoundButton(
-                loading: loading,
-                title: 'Log In',
-                onTap: () {
-                  if (_formKey.currentState!.validate()) {
-                    logIn();
-                  }
-                },
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Don't Have Account?"),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const SignUpScreen()));
-                    },
-                    child: const Text(
-                      'Sign Up',
+                SizedBox(
+                  height: 30,
+                ),
+                InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>LogInWithPhoneNumber()));
+                  },
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      border: Border.all(
+                        color: Colors.black
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>LogInWithPhoneNumber()));
-                },
-                child: Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    border: Border.all(
-                      color: Colors.black
+                    child: Center(
+                      child: Text('Login With Phone'),
                     ),
-                  ),
-                  child: Center(
-                    child: Text('Login With Phone'),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
